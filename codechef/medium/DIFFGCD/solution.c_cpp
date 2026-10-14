@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+      int y;
+      cin >> y;
+      while (y--) {
+        long long n;
+        cin >> n;
+          long long sum = 0;
+           for (long long l = 1, r; l <= n; l = r + 1) {
+            long long q = n / l;
+            r = n / q;
+            sum += q * (r - l + 1);
+        }
+        cout << sum - n << "\n";
+    }
+    return 0;
+}
