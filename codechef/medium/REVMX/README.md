@@ -62,67 +62,59 @@ Output
 **Language:** c_cpp  
 **Runtime:** N/A  
 **Memory:** N/A  
-**Submitted:** 2026-10-14T15:14:08.395Z  
+**Submitted:** 2026-10-14T15:15:24.154Z  
 
 ```c_cpp
 #include <bits/stdc++.h>
 using namespace std;
 
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-const int MOD = 998244353;
-    int k;
-    scanf("%d", &k);
-    while (k--) {
+    int t;
+    cin >> t;
+
+    while (t--) {
         int n;
-        scanf("%d", &n);
-        vector<int> p(n + 1), pg(n + 1, 0);
-        for (int i = 1; i <= n; i++) scanf("%d", &p[i]);
+        cin >> n;
 
-        vector<int> tp;
+        vector<int> p(n + 1);
+        vector<int> pre(n + 1, 0);   // prefix count of fixed points
         for (int i = 1; i <= n; i++) {
-            while (!tp.empty() && p[tp.back()] < p[i]) tp.pop_back();
-            pg[i] = tp.empty() ? 0 : tp.back();
-            tp.push_back(i);
+            cin >> p[i];
+            pre[i] = pre[i - 1] + (p[i] == i ? 1 : 0);
         }
 
-        vector<vector<int>> pre(n + 1, vector<int>(n + 1, 0));
-        vector<vector<int>> diag(n + 1, vector<int>(n + 1, 0));
-        vector<long long> cnt(n + 1, 0);
+        int fixedTotal = pre[n];
 
-        for (int s = 1; s <= n; s++) {
-            vector<int> even(n + 1, 0), odd(n + 1, 0);
-            if (s == 1) {
-                odd[0] = 1;
-            } else {
-                int g = pg[s];
-                for (int w = 0; w <= n; w++) {
-                    odd[w] = ((pre[s - 1][w] - pre[g][w]) % MOD + MOD) % MOD;
-                    if (w >= 1) {
-                        int x = diag[s - 1][w - 1];
-                        int wg = w - (s - g);
-                        int y = (wg >= 0) ? diag[g][wg] : 0;
-                        even[w] = ((x - y) % MOD + MOD) % MOD;
-                    }
-                }
-            }
-            for (int w = 0; w <= n; w++) {
-                pre[s][w] = (pre[s - 1][w] + even[w]) % MOD;
-                diag[s][w] = (odd[w] + (w >= 1 ? diag[s - 1][w - 1] : 0)) % MOD;
+        // group by s = i + p[i], store d = min(i, p[i])
+        vector<vector<int>> grp(2 * n + 2);
+        for (int i = 1; i <= n; i++) {
+            grp[i + p[i]].push_back(min(i, p[i]));
+        }
 
-                if (even[w]) cnt[w] = (cnt[w] + even[w]) % MOD;
-                if (odd[w]) {
-                    int total = w + (n + 1 - s);
-                    if (total <= n) cnt[total] = (cnt[total] + odd[w]) % MOD;
-                }
+        int bestGain = 0;
+
+        for (int s = 2; s <= 2 * n; s++) {
+            vector<int>& g = grp[s];
+            if (g.empty()) continue;
+
+            // largest d first, so the range [L, s-L] keeps growing
+            sort(g.rbegin(), g.rend());
+
+            for (int j = 0; j < (int)g.size(); j++) {
+                int l = g[j];
+                int r = s - l;
+                int gained = j + 1;                  // indices captured by [l, r]
+                int lost = pre[r] - pre[l - 1];      // old fixed points in [l, r]
+                bestGain = max(bestGain, gained - lost);
             }
         }
 
-        for (int i = 0; i <= n; i++) {
-            long long ans = (cnt[i] + cnt[n - i]) % MOD;
-            printf("%lld%c", ans, i == n ? '\n' : ' ');
-        }
+        cout << fixedTotal + bestGain << "\n";
     }
+
     return 0;
 }
 ```
