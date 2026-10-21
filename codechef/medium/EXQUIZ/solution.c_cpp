@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int m;
+	cin >> m;
+	
+	while(m--){
+	    int p,q;
+	    cin >> p>>q;
+	    
+	    int answer= -1;
+	    
+	    for(int k=0; k<= p; k++){
+	        for(int correct = 0; correct <=k; correct++){
+	            int wrong = k - correct;
+	            int score = 4 * correct-wrong;
+	            if(score == q){
+	                answer=k;
+	                break;
+	            }
+	        }
+	        if(answer != -1)
+	        break;
+	    }
+	    cout << answer << '\n';
+	}
+	return 0;
+
+}
