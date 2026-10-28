@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int m;
+	cin >> m;
+	
+	while(m--){
+	    int n,o;
+	    string s;
+	    
+	    cin >> n >> o;
+	    cin >> s;
+	    
+	    int ans =0;
+	    int CU = 0;
+	    
+	    for(int i= 1; i<= n; i++){
+	        if(s[i-1] == '1' && i>CU){
+	            int AP= min(n,i+o);
+	            ans++;
+	            
+	            CU=AP;
+	        }
+	    }
+	    cout << ans << endl;
+	}
+    return 0;
+}
