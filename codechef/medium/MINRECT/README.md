@@ -75,7 +75,7 @@ Output
 **Language:** c_cpp  
 **Runtime:** N/A  
 **Memory:** N/A  
-**Submitted:** 2026-11-04T15:21:36.343Z  
+**Submitted:** 2026-11-04T15:22:52.906Z  
 
 ```c_cpp
 #include <bits/stdc++.h>
@@ -101,9 +101,9 @@ int main() {
             for(int j=0; j<M; j++){
                 if(a[i][j] == '1'){
                     minRow = min(minRow, i);
-                    maxRow = max(maxRow, j);
+                    maxRow = max(maxRow, i);
                     
-                    minCol = min(minCol, i);
+                    minCol = min(minCol, j);
                     maxCol = max(maxCol, j);
                 }
                 
