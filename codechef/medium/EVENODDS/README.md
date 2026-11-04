@@ -72,7 +72,7 @@ Output
 **Language:** c_cpp  
 **Runtime:** N/A  
 **Memory:** N/A  
-**Submitted:** 2026-11-04T14:54:34.275Z  
+**Submitted:** 2026-11-04T15:04:45.962Z  
 
 ```c_cpp
 #include <bits/stdc++.h>
@@ -83,9 +83,34 @@ int main() {
 	cin >> M;
 	
 	while(M--){
+	    int N;
+	    cin >> N;
+	    
+	    vector<int> a(N);
+	    
+	    for(int i=0; i<N; i++){
+	        cin >> a[i];
+	    }
+	    int first[2] = {-2,-2};
+	    first[0] = -1;
+	    
+	    int parity = 0;
+	    int answer = 0;
+	    
+	    for(int i=0; i<N; i++){
+	        if(a[i] % 2 != 0){
+	            parity ^= 1;
+	        }
+	        if (first[parity] != -2){
+	            answer = max(answer, i-first[parity]);
+	        }else{
+	            first [parity] = i;
+	        }
+	    }
+	    cout << answer << endl;
 	    
 	}
-
+    return 0;
 }
 
 ```
