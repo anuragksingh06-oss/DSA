@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int O;
+    cin >> O;
+    
+    while(O--){
+        int N,M;
+        cin >> N >> M;
+        
+        vector<string> a(N);
+        
+        for(int i=0; i<N; i++){
+            cin >> a[i];
+        }
+        int minRow = N, maxRow = -1;
+        int minCol = M, maxCol= -1;
+        
+        for(int i=0; i<N; i++){
+            for(int j=0; j<M; j++){
+                if(a[i][j] == '1'){
+                    minRow = min(minRow, i);
+                    maxRow = max(maxRow, j);
+                    
+                    minCol = min(minCol, i);
+                    maxCol = max(maxCol, j);
+                }
+                
+            }
+        }
+        int height = maxRow - minRow + 1;
+        int width = maxCol - minCol + 1;
+        
+        int ans = height * width;
+        
+        cout<< ans << endl;
+    }
+    return 0;
+}
