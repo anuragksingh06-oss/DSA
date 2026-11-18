@@ -1,0 +1,18 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int M;
+	cin >> M;
+	while(M--){
+	    int N,K;
+	    string S;
+	    cin >> N >> K >> S;
+	    int run = 1;
+	    for(int i=1 ; i<N; i++){
+	        if(S[i] != S[i-1]) run++;
+	    }
+	    cout << (run <= K? "YES" : "NO") <<"\n";
+	}
+    return 0;
+}
